@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+
+    <title>List d'operation</title>
+</head>
+
+<header>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="/">LSI BANK</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNavDropdown">
+                <ul class="navbar-nav">
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            Clients
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                            <li><a class="dropdown-item" href="/client/form">Ajouter un client</a></li>
+                            <li><a class="dropdown-item" href="/client/consulter">consulter</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            Comptes
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                            <li><a class="dropdown-item" href="/compte/form/cc">Ajouter un compte courant</a></li>
+                            <li><a class="dropdown-item" href="/compte/form/ce">Ajouter un compte epargne</a></li>
+                            <li><a class="dropdown-item" href="/compte/consulter">Consulter les comptes</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            Employes
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                            <li><a class="dropdown-item" href="/employe/form">Ajouter un employe</a></li>
+                            <li><a class="dropdown-item" href="/employe/consulter">consulter les employes</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            Groupes
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                            <li><a class="dropdown-item" href="/groupe/form">Ajouter un groupe</a></li>
+                            <li><a class="dropdown-item" href="/groupe/form/EmpToGrp">Ajouter employes à un groupe</a></li>
+                            <li><a class="dropdown-item" href="/groupe/consulter">Consulter les groupes</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            Operations
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                            <li><a class="dropdown-item" href="/operation/verser">Verser</a></li>
+                            <li><a class="dropdown-item" href="/operation/retirer">Retirer</a></li>
+                            <li><a class="dropdown-item" href="/operation/virer">Virer</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+</header>
+
+
+<body>
+  <div class="container">
+      <h1>Opérations du compte : <span th:utext="${codeCompte}"></span></h1>
+
+      <div class="row">
+          <div class="col-lg-10 mt-5 mb-5">
+              <table id="posts" class="table table-bordered table-responsive-sm">
+                  <thead>
+                      <tr>
+                          <th>ID</th>
+                          <th>montant</th>
+                          <th>Effectué par</th>
+                          <th>date d'operation</th>
+                      </tr>
+                  </thead>
+                  <tbody>
+                        <tr th:each="op : ${operations}">
+                             <td th:utext="${op.numeroOperation}"></td>
+                             <td th:utext="${op.montant}"></td>
+                             <td th:utext="${op.employe.nomEmploye}"></td>
+                             <td th:utext="${op.dateOperation}"></td>
+                        </tr>
+                  </tbody>
+              </table>
+          </div>
+      </div>
+
+
+
+      <form th:action="@{/operation/compte}" method="get" >
+              <input type="hidden" name="codeCompte" th:value="${codeCompte}">
+
+        <div class="form-row">
+            <div class="form-group col-md-6">
+                <label> Nombre des pages : </label>
+                <select class="form-select" name="page">
+                    <option th:value="${oldPage}" th:utext="${oldPage}" selected></option>
+                    <option th:if="${oldPage}!=0" value="0">0</option>
+                    <option th:if="${oldPage}!=1" value="1">1</option>
+                    <option th:if="${oldPage}!=2" value="2">2</option>
+                    <option th:if="${oldPage}!=3" value="3">3</option>
+                    <option th:if="${oldPage}!=4" value="4">4</option>
+                    <option th:if="${oldPage}!=5" value="5">5</option>
+                </select>
+            </div>
+
+            <div class="form-group col-md-6">
+                <label class="form-label"> Nombre des operations par page : </label>
+
+                <select class="form-select" name="size">
+                    <option th:value="${oldSize}" th:utext="${oldSize}" selected></option>
+                    <option th:if="${oldSize}!=2" value="2">2</option>
+                    <option th:if="${oldSize}!=5" value="5">5</option>
+                    <option th:if="${oldSize}!=10" value="10">10</option>
+                    <option th:if="${oldSize}!=20" value="20">20</option>
+                    <option th:if="${oldSize}!=100" value="100">100</option>
+                </select>
+            </div>
+        <br>
+            <button type="submit" class="btn btn-warning">
+                Rafraîchir <i class="fas fa-redo-alt"></i>
+            </button>
+        </div>
+
+      </form>
+
+  </div>
+
+
+</body>
+</html>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.14.0-beta2/js/bootstrap-select.min.js" integrity="sha512-FHZVRMUW9FsXobt+ONiix6Z0tIkxvQfxtCSirkKc5Sb4TKHmqq1dZa8DphF0XqKb3ldLu/wgMa8mT6uXiLlRlw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
