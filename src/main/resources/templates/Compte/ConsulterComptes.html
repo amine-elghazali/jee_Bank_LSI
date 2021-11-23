@@ -7,7 +7,7 @@
     <title>liste comptes</title>
 </head>
 <header>
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <nav class="navbar navbar-expand-lg navbar-light">
         <div class="container-fluid">
             <a class="navbar-brand" href="/">LSI BANK</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
@@ -21,7 +21,7 @@
                         </a>
                         <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                             <li><a class="dropdown-item" href="/client/form">Ajouter un client</a></li>
-                            <li><a class="dropdown-item" href="/client/consulter">consulter</a></li>
+                            <li><a class="dropdown-item" href="/client/consulter">consulter les client</a></li>
                         </ul>
                     </li>
                     <li class="nav-item dropdown">
@@ -49,7 +49,7 @@
                         </a>
                         <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                             <li><a class="dropdown-item" href="/groupe/form">Ajouter un groupe</a></li>
-                            <li><a class="dropdown-item" href="/groupe/form/EmpToGrp">Ajouter employes à un groupe</a></li>
+                            <li><a class="dropdown-item" href="/groupe/form/EmpToGrp">Ajouter employès à un groupe</a></li>
                             <li><a class="dropdown-item" href="/groupe/consulter">Consulter les groupes</a></li>
                         </ul>
                     </li>
@@ -69,40 +69,51 @@
     </nav>
 </header>
 <body>
-    <table class="table caption-top">
-        <caption>List of users</caption>
-        <thead>
-        <tr>
-            <th scope="col">Type du compte</th>
-            <th scope="col">solde</th>
-            <th scope="col">decouvert</th>
-            <th scope="col">taux</th>
-            <th scope="col">Client</th>
-            <th scope="col">Créer par</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr th:each="compte : ${comptes}">
-            <th scope="row" th:utext="${compte.class.simpleName}"></th>
-            <th scope="row" th:utext="${compte.solde}"></th>
 
-            <div th:if="${compte.class.simpleName}=='CompteCourant'"  >
-                <th scope="row" th:utext="${compte.decouvert}"></th>
+    <div class="container mt-5">
+        <h1>Liste des groupes disponilbes</h1>
+        <hr style="color:blue"/>
+
+        <div class="row">
+            <div class="col-lg-10 mt-5 mb-5">
+                <table class="table table-bordered table-responsive-sm">
+                    <thead>
+                    <tr>
+                        <th scope="col">Code compte</th>
+                        <th scope="col">Type du compte</th>
+                        <th scope="col">solde</th>
+                        <th scope="col">decouvert</th>
+                        <th scope="col">taux</th>
+                        <th scope="col">Client</th>
+                        <th scope="col">Créer par</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="compte : ${comptes}">
+                        <th th:utext="${compte.codeCompte}"></th>
+                        <td scope="row" th:utext="${compte.class.simpleName}"></td>
+                        <td scope="row" th:utext="${compte.solde}"></td>
+
+                        <div th:if="${compte.class.simpleName}=='CompteCourant'"  >
+                            <td scope="row" th:utext="${compte.decouvert}"></td>
+                        </div>
+                        <div th:unless="${compte.class.simpleName}==''">
+                            <td scope="row">----</td>
+                        </div>
+
+
+                        <div th:if="${compte.class.simpleName}=='CompteEpargne'"  >
+                            <td scope="row" th:utext="${compte.taux}+'%'"></td>
+                        </div>
+
+
+                        <td scope="row" th:utext="${compte.client.nomClient}"></td>
+                        <td scope="row" th:utext="${compte.employe.nomEmploye}"></td>
+                    </tr>
+                    </tbody>
+                </table>
             </div>
-            <div th:unless="${compte.class.simpleName}==''">
-                <th scope="row">----</th>
-            </div>
-
-
-            <div th:if="${compte.class.simpleName}=='CompteEpargne'"  >
-                <th scope="row" th:utext="${compte.taux}+'%'"></th>
-            </div>
-
-
-            <th scope="row" th:utext="${compte.client.nomClient}"></th>
-            <th scope="row" th:utext="${compte.employe.nomEmploye}"></th>
-        </tr>
-        </tbody>
-    </table>
+        </div>
+    </div>
 </body>
 </html>

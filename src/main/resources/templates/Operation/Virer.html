@@ -13,7 +13,7 @@
 </head>
 
 <header>
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <nav class="navbar navbar-expand-lg navbar-light">
         <div class="container-fluid">
             <a class="navbar-brand" href="/">LSI BANK</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
@@ -27,7 +27,7 @@
                         </a>
                         <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                             <li><a class="dropdown-item" href="/client/form">Ajouter un client</a></li>
-                            <li><a class="dropdown-item" href="/client/consulter">consulter</a></li>
+                            <li><a class="dropdown-item" href="/client/consulter">consulter les client</a></li>
                         </ul>
                     </li>
                     <li class="nav-item dropdown">
@@ -55,7 +55,7 @@
                         </a>
                         <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                             <li><a class="dropdown-item" href="/groupe/form">Ajouter un groupe</a></li>
-                            <li><a class="dropdown-item" href="/groupe/form/EmpToGrp">Ajouter employes à un groupe</a></li>
+                            <li><a class="dropdown-item" href="/groupe/form/EmpToGrp">Ajouter employès à un groupe</a></li>
                             <li><a class="dropdown-item" href="/groupe/consulter">Consulter les groupes</a></li>
                         </ul>
                     </li>
@@ -86,6 +86,7 @@
                 <div class="input-group mt-5">
                     <label class="from-label" style="margin-right: 20px;">Compte émetteur  </label><br>
                     <select class="selectpicker" name="cpte1">
+                        <option selected></option>
                         <option th:each="compte : ${comptes}"
                                 th:text="${compte.codeCompte}"
                                 th:value="${compte.codeCompte}">

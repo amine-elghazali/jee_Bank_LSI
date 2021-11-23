@@ -8,7 +8,7 @@
 </head>
 
 <header>
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <nav class="navbar navbar-expand-lg navbar-light">
         <div class="container-fluid">
             <a class="navbar-brand" href="/">LSI BANK</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
@@ -22,7 +22,7 @@
                         </a>
                         <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                             <li><a class="dropdown-item" href="/client/form">Ajouter un client</a></li>
-                            <li><a class="dropdown-item" href="/client/consulter">consulter</a></li>
+                            <li><a class="dropdown-item" href="/client/consulter">consulter les client</a></li>
                         </ul>
                     </li>
                     <li class="nav-item dropdown">
@@ -50,7 +50,7 @@
                         </a>
                         <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                             <li><a class="dropdown-item" href="/groupe/form">Ajouter un groupe</a></li>
-                            <li><a class="dropdown-item" href="/groupe/form/EmpToGrp">Ajouter employes à un groupe</a></li>
+                            <li><a class="dropdown-item" href="/groupe/form/EmpToGrp">Ajouter employès à un groupe</a></li>
                             <li><a class="dropdown-item" href="/groupe/consulter">Consulter les groupes</a></li>
                         </ul>
                     </li>
@@ -71,24 +71,32 @@
 </header>
 
 <body>
-    <table class="table caption-top">
-        <caption>List of users</caption>
-        <thead>
-        <tr>
-            <th scope="col">#</th>
-            <th scope="col">nom</th>
-            <th scope="col">Employè sup</th>
-            <th scope="col"> Groupes </th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr th:each="employe : ${employes}">
-            <th scope="row" th:utext="${employe.codeEmploye}"></th>
-            <td th:utext="${employe.nomEmploye}"></td>
-            <th th:utext="${employe.employeSup.nomEmploye}"></th>
-            <th> <span th:each="groupe : ${employe.groupes}" > <span th:text="${groupe.nomGroupe}+' - '"></span> </span></th>
-        </tr>
-        </tbody>
-    </table>
+    <div class="container mt-5">
+        <h1>Liste des groupes disponilbes</h1>
+
+        <hr style="color:blue"/>
+
+        <div class="row">
+            <div class="col-lg-10 mt-5 mb-5">
+                <table class="table table-bordered table-responsive-sm">
+                    <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">nom</th>
+                        <th scope="col">Employè sup</th>
+                        <th scope="col"> Groupes </th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="employe : ${employes}">
+                        <th scope="row" th:utext="${employe.codeEmploye}"></th>
+                        <td th:utext="${employe.nomEmploye}"></td>
+                        <td th:utext="${employe.employeSup.nomEmploye}"></td>
+                        <td> <span th:each="groupe : ${employe.groupes}" > <span th:text="${groupe.nomGroupe}+' - '"></span> </span></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+    </div>
 </body>
 </html>

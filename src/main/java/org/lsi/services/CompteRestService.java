@@ -70,7 +70,7 @@ public class CompteRestService {
 			System.out.println("waaahya");
 			e.printStackTrace();
 		}
-		return "redirect:consulter";
+		return "redirect:/compte/consulter";
 	}
 
 
